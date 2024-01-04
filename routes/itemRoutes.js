@@ -5,12 +5,14 @@
 const express = require("express");
 
 const { items } = require("../fakeDb");
+// ^ TODO: references items arr in fakeDb
 const { BadRequestError, NotFoundError } = require("../expressError");
 const router = new express.Router();
 
 /** GET /items: get a list of shopping items */
 router.get("/", function (req, res) {
-  return res.json(items);
+  return res.json({items});
+  // TODO: ^ can use {} here
 });
 
 /** POST /items: add item to list of shopping items.
