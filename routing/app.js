@@ -5,6 +5,7 @@ const { NotFoundError } = require("./expressError");
 const app = express();
 
 const userRoutes = require("./userRoutes");
+const itemRoutes = require("./itemRoutes");
 const { logger, onlyAllowElie } = require("./middleware");
 
 app.use(express.json());
@@ -14,6 +15,9 @@ app.use(logger);
 
 // apply a prefix to every route in userRoutes
 app.use("/users", userRoutes);
+
+// apply a prefix to every route in itemRoutes
+app.use("/items", itemRoutes);
 
 /** Greet user, only if it is Elie. */
 
