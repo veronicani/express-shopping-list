@@ -24,10 +24,15 @@ router.post("/", function (req, res) {
 
   items.push(req.body);
   // console.log("items w/ added item: ", items);
-  return res.json({
-    name: req.body.name,
-    price: req.body.price
-  });
+  return res
+    .status(201)
+    .json(
+      {added: {
+        name: req.body.name,
+        price: req.body.price
+        }
+      }
+    );
 });
 
 
