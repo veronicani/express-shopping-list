@@ -22,14 +22,19 @@ router.post("/", function (req, res) {
 
   if (req.body === undefined) throw new BadRequestError();
 
+  console.log('This is req.body', req.body);
+  const { name, price } = req.body;
+  // TODO: ^ can destructure here
+
   items.push(req.body);
-  // console.log("items w/ added item: ", items);
+  console.log("items w/ added item: ", items);
   return res
     .status(201)
     .json(
       {added: {
         name: req.body.name,
         price: req.body.price
+        // TODO: ^ can get rid of this
         }
       }
     );
