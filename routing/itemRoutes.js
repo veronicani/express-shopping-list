@@ -4,8 +4,8 @@
 
 const express = require("express");
 
-const { items } = require("./fakeDb");
-const { BadRequestError, NotFoundError } = require("./expressError");
+const { items } = require("../fakeDb");
+const { BadRequestError, NotFoundError } = require("../expressError");
 const router = new express.Router();
 
 /** GET /items: get a list of shopping items */
@@ -18,12 +18,12 @@ router.get("/", function (req, res) {
  *      Returns: JSON, like {added: {name: "popsicle", price: 1.45}}
  */
 router.post("/", function (req, res) {
-  console.log("req.body: ", req.body);
+  // console.log("req.body: ", req.body);
 
   if (req.body === undefined) throw new BadRequestError();
 
   items.push(req.body);
-  console.log("items w/ added item: ", items);
+  // console.log("items w/ added item: ", items);
   return res.json({
     name: req.body.name,
     price: req.body.price
@@ -36,20 +36,9 @@ router.get('/:name', function (req, res) {
 
   const singleItemName = req.params.name;
 
-  let item;
-  try {
-    item = items.find(x => x.name === singleItemName)
-  } catch {
-    throw new NotFoundError();
-  }
-
-  // if (!(items.find(x => x.name === singleItemName))) {
-  //   throw new NotFoundError();
-  // }
-
-  // const item = items.find(x => x.name === singleItemName);
-
-  console.log('singleItem:', item);
+  let item = items.find(x => x.name === singleItemName);
+  if (item === undefined) throw new NotFoundError();
+  // console.log('singleItem:', item);
 
   return res.json(item);
 });
@@ -62,30 +51,34 @@ router.patch('/:name', function (req, res) {
 
   const singleItemName = req.params.name;
 
-  let item;
-  try {
-    item = items.find(x => x.name === singleItemName)
-  } catch {
-    throw new NotFoundError();
-  }
+  let item = items.find(x => x.name === singleItemName);
+  if (item === undefined) throw new NotFoundError();
 
   item.name = req.body.name;
   item.price = req.body.price;
 
-  console.log('updated', item);
-
   return res.json({
     updated: item
   });
-
-
-  // return res.json({
-  //   name: req.body.name,
-  //   price: req.body.price
-  // });
 });
 
 
+/** DELETE /items/:name: deletes the item.
+ *     Returns: JSON {message: "Deleted"}.
+ */
+router.delete('/:name', function (req, res) {
+  const singleItemName = req.params.name;
+
+  let itemIdx = items.findIndex(x => x.name === singleItemName);
+  if (itemIdx < 0) throw new NotFoundError();
+
+  items.splice(itemIdx, 1);
+
+  // console.log("items w/ deleted item: ", items);
+  return res.json({
+    message: "Deleted"
+  });
+});
 
 
 module.exports = router;
