@@ -1,3 +1,5 @@
+"use strict";
+
 /** Routes for items. */
 
 const express = require("express");
@@ -14,10 +16,10 @@ router.get("/", function (req, res) {
 /** POST/items: add item to list of shopping items.
  *      Accepts: JSON, like {name: <item>, price: <price>}
  *      Returns: JSON, like {added: {name: "popsicle", price: 1.45}}
- */     
+ */
 router.post("/", function (req, res) {
   console.log("req.body: ", req.body);
-  
+
   if (req.body === undefined) throw new BadRequestError();
 
   items.push(req.body);
@@ -27,6 +29,9 @@ router.post("/", function (req, res) {
     price: req.body.price
   });
 });
+
+
+
 
 module.exports = router;
 

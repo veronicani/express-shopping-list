@@ -1,3 +1,6 @@
+"use strict";
+
+
 /** Pattern matched from demo example middleware. */
 
 const { UnauthorizedError } = require("./expressError");

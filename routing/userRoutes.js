@@ -1,3 +1,6 @@
+"use strict";
+
+
 /** Routes for items. */
 
 const express = require("express");

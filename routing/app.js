@@ -1,3 +1,5 @@
+"use strict";
+
 /** App for shopping list. */
 
 const express = require("express");
