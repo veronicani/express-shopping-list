@@ -6,8 +6,8 @@ const express = require("express");
 const { NotFoundError } = require("./expressError");
 const app = express();
 
-const userRoutes = require("./userRoutes");
-const itemRoutes = require("./itemRoutes");
+const userRoutes = require("./routing/userRoutes");
+const itemRoutes = require("./routing/itemRoutes");
 const { logger, onlyAllowElie } = require("./middleware");
 
 app.use(express.json());
